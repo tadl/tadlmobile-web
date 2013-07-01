@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-   <base href="/m/">
+    <base href="/m/"> 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <link rel="stylesheet" type="text/css" href="css/holo-base-elements.css" />
     <link rel="stylesheet" type="text/css" href="css/holo-light-elements.css" />
@@ -60,17 +60,33 @@ router
         <a href="menu.html" data-slidepanel="panel"><img class="left logo pointer" src="img/tinylogo.png" width="30" height="30" alt="" /></a>
         <input class="search_box left" type="text" placeholder="Search..." id="term" />
         <button id="search" class="left bigger">GO</button>
+        <button id="account" class="left bigger" onclick="openSearch_options()"><img src="img/settings-gear.png" alt="ACCT" width="30" height="30" /></button>
         <button id="account" class="right bigger" onclick="openForm()"><img src="img/account.png" alt="ACCT" width="30" height="30" /></button>
         <div class="clearfix"></div>
-        <input class="left" type="checkbox" id="available" value="false" /><div class="left five">ONLY AVAILABLE</div>
+        <div id="search_options" style="display: none">
+        <input class="left" type="checkbox" id="available" value="false" style="margin-left: 40px;" />
+        <div class="left five" >ONLY AVAILABLE</div>
+        
         <select style="margin-bottom:15px;margin-top:0;" id="mediatype">
-            <option value="ALL">ALL FORMATS</option>
+            <option value="ALL FORMATS">ALL FORMATS</option>
             <option value="BOOKS">BOOKS</option>
             <option value="MOVIES">MOVIES</option>
             <option value="MUSIC">MUSIC</option>
             <option value="VIDEO GAMES">VIDEO GAMES</option>
         </select>
+<br />
+        <select style="margin-bottom:15px;margin-top:0;margin-left: 40px;" id="location">
+            <option value="22">ALL LOCATIONS</option>
+            <option value="23">WOODMERE</option>
+            <option value="25">KINGSLEY</option>
+            <option value="24">INTERLOCHEN</option>
+            <option value="27">FIFE LAKE</option>
+            <option value="28">EAST BAY</option>
+            <option value="26">PENINSULA</option>
+        </select>
+        </div>
     </section>
+  
     <div id="login_form">
     Username: <input type="text" id="username" /><br />
     Password: <input type="password" id="pword" /><br />
@@ -87,7 +103,9 @@ router
         });
     });
 </script>
+<div id="search-params">
 
+</div>
 <div id="results">
 </div>
 

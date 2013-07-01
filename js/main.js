@@ -54,12 +54,18 @@ function loadmore() {
 
 function getResults() {
         $("#login_form").slideUp("fast");
+        $("#search_options").slideUp("fast");
+        $('#search-params').empty();
         $('#results').empty().trigger("create");
         $('.load_more').show();
         $('#loadmoretext').empty().append(loadingmoreText).trigger("create");
         pagecount = 0;
         searchquery = $('#term').val();
         mediatype = $('#mediatype').val();
+        loc = $('#location').val();
+        loctext = document.getElementById("location").options[document.getElementById('location').selectedIndex].text;
+        
+        
         if (document.getElementById('available').checked) {
             available = true;
         } else {
@@ -67,7 +73,7 @@ function getResults() {
         }
         var newstate = 'search/'+searchquery+'/'+mediatype+'/'+available; 
         History.pushState({action: showcheckouts}, psTitle + "Search", newstate); 
-        $.getJSON(ILSCATCHER_INSECURE_BASE + "/main/searchjson.json?utf8=%E2%9C%93&q=" + searchquery + "&mt=" + mediatype +"&avail=" + available, function(data) {
+        $.getJSON(ILSCATCHER_INSECURE_BASE + "/main/searchjson.json?utf8=%E2%9C%93&q=" + searchquery + "&mt=" + mediatype +"&avail=" + available + "&loc=" + loc, function(data) {
             var results = data.message
             if (results != "no results") {
                 var template = Handlebars.compile($('#results-template').html());
@@ -75,6 +81,7 @@ function getResults() {
                 $('#results').html(info);
                 $('#loadmoretext').empty().append(loadmoreText);
                 $('#loadmoretext').trigger("create");
+                $('#search-params').html('Searching for '+ searchquery +' in ' + mediatype + ' at ' + loctext + '. <a onclick="openSearch_options()">options...</a>');
             } else {
                 $('#results').html("No Results");
                  $('.load_more').hide();
@@ -121,6 +128,8 @@ function showmore(record_id) {
 
 function showfeatured() {
     $("#login_form").slideUp("fast");
+    $("#search_options").slideUp("fast");
+    $('#search-params').empty();
     $('#results').html('<div class="image_carousel"><div id="featured"></div><div class="clearfix"></div></div>');
     History.pushState({action: showfeatured}, psTitle + "Featured Items", "featured");
     $('.load_more').show();
@@ -139,6 +148,8 @@ function showfeatured() {
 
 function viewitem(record_id) {
     $("#login_form").slideUp("fast");
+    $("#search_options").slideUp("fast");
+    $('#search-params').empty();
     $('#results').empty().trigger("create");
     History.pushState({action: viewitem}, psTitle + "Item " + record_id, "item/" + record_id);
     $('.load_more').show();
@@ -244,6 +255,7 @@ function partB() {
 
 function openForm() {
     if ($("#login_form").is(":hidden")) {
+        $("#search_options").slideUp("fast");
         $("#login_form").slideDown("fast");
         login();
     } else {
@@ -251,6 +263,17 @@ function openForm() {
         
     }
 }
+
+function openSearch_options() {
+    if ($("#search_options").is(":hidden")) {
+        $("#login_form").slideUp("fast");
+        $("#search_options").slideDown("fast");
+    } else {
+        $("#search_options").slideUp("fast");
+        
+    }
+}
+
 
 function login() {
     if (localStorage.getItem('username')) {
@@ -281,6 +304,8 @@ function login() {
 
 function showcheckouts() {
     $("#login_form").slideUp("fast");
+    $("#search_options").slideUp("fast");
+    $('#search-params').empty();
     $('#results').html("");
     History.pushState({action: showcheckouts}, psTitle + "Checked-Out Items", "checkout");  
     $('.load_more').show();
@@ -317,6 +342,8 @@ function cancelhold(hold_id) {
 
 function showholds() {
     $("#login_form").slideUp("fast");
+    $("#search_options").slideUp("fast");
+    $('#search-params').empty();
     $('#results').html("");
     History.pushState({action: showholds}, psTitle + "Holds", "holds"); 
     $('.load_more').show();
@@ -334,6 +361,8 @@ function showholds() {
 
 function showpickups() {
     $("#login_form").slideUp("fast");
+    $("#search_options").slideUp("fast");
+    $('#search-params').empty();
     $('#results').html("");
     History.pushState({action: showpickups}, psTitle + "Items Ready for Pickup", "pickup"); 
     $('.load_more').show();
@@ -380,6 +409,8 @@ function getsearch(query, mt, avail) {
 
 function showcard() {
     $("#login_form").slideUp("fast");
+    $("#search_options").slideUp("fast");
+    $('#search-params').empty();
     $('#results').html("");
     History.pushState({action: showcard}, psTitle + "Mobile Library Card", "card"); 
     $('.load_more').show();
@@ -396,7 +427,9 @@ function showcard() {
 }
 
 function showevents() { 
-     $("#login_form").slideUp("fast");
+    $("#login_form").slideUp("fast");
+    $("#search_options").slideUp("fast");
+    $('#search-params').empty();
     $('#results').html("");
     History.pushState({action: showevents}, psTitle + "Upcoming Events", "events"); 
     $('.load_more').show();
@@ -411,6 +444,8 @@ function showevents() {
 
 function showlocations() { 
     $("#login_form").slideUp("fast");
+    $("#search_options").slideUp("fast");
+    $('#search-params').empty();
     $('#results').html("");
     History.pushState({action: showlocations}, psTitle + "Library Locations", "locations"); 
     $('.load_more').show();
@@ -425,6 +460,8 @@ function showlocations() {
 
 function showmain() {
     $("#login_form").slideUp("fast");
+    $("#search_options").slideUp("fast");
+    $('#search-params').empty();
     $('#results').html('<div id="mainpage"><div class="mainlogo"><img class="homelogo" src="img/clean-logo-header.png" alt="" /></div><div class="mainlinks"></div><div class="clearfix"></div></div>');
     History.pushState({action: showmain}, psTitle + "Search and Explore", "");
     $('.mainlinks').load('menu.html');
@@ -432,6 +469,8 @@ function showmain() {
 
 function facebookfeed() { 
     $("#login_form").slideUp("fast");
+    $("#search_options").slideUp("fast");
+    $('#search-params').empty();
     $('#results').html("");
     History.pushState({action: facebookfeed}, psTitle + "Facebook Feed", "facebook"); 
     $('.load_more').show();
