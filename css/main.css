@@ -310,14 +310,14 @@ th {
 #slidepanel .inner .wrapper a.button {
     width:133px;
     display:inline-block;
-    margin:0;
+    margin:4px 0;
     padding:8px 5px;
 }
 .mainlinks a.button {
     position:relative;
     width:148px;
     display:inline-block;
-    margin:0;
+    margin:4px 0;
 }
 
 #mainpage {
