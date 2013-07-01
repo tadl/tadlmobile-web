@@ -183,6 +183,7 @@ button.bigger {
     text-decoration:none;
     font-weight:bold;
     font-size:1.1em;
+    white-space:nowrap;
 }
 
 .button:hover {
@@ -288,20 +289,35 @@ th {
 
 .mainlogo {
     float:left;
-    max-width:240px;
+    max-width:200px;
     width:100%;
     margin: 0 auto;
 }
 
 .mainlinks {
     float:left;
-    max-width:280px;
-    text-align:left;
+    max-width:200px;
+    width:100%;
+    text-align:center;
     margin:0 auto;
 }
 
 .mainlinks .button {
     font-size: 1.3em;
+    width:250px;
+}
+
+#slidepanel .inner .wrapper a.button {
+    width:133px;
+    display:inline-block;
+    margin:0;
+    padding:8px 5px;
+}
+.mainlinks a.button {
+    position:relative;
+    width:148px;
+    display:inline-block;
+    margin:0;
 }
 
 #mainpage {
