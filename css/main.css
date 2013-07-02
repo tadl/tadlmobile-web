@@ -14,7 +14,7 @@ a {
 
 input[type="checkbox"] {
     cursor:pointer;
-    margin:5px 0 0 15px;
+    margin:5px 0 0 0;
     padding:0;
 }
 
@@ -45,7 +45,7 @@ input[type="checkbox"] {
 
 .search_box {
     width:40%;
-    max-width:350px;
+    min-width:35%;
     height:22px;
     font-size:16px;
     margin-top:5px;
@@ -169,6 +169,11 @@ button {
 
 button.bigger {
     font-size:15px;
+    padding: 1px 8px 2px;
+}
+
+button.biggerer {
+    font-size:18px;
     padding: 1px 8px 2px;
 }
 
@@ -322,7 +327,22 @@ th {
 }
 
 #mainpage {
-    max-width: 460px;
+    max-width: 500px;
     margin:0 auto;
+}
+
+#search_options {
+    margin:0 0 15px 44px;
+    display:none;
+}
+
+#mediatype {
+    padding:5px;
+    margin:0 0 5px 0;
+}
+
+#location {
+    padding:5px;
+    margin:0 0 5px 0;
 }
 

@@ -59,22 +59,21 @@ router
     <section class="searchform">
         <a href="menu.html" data-slidepanel="panel"><img class="left logo pointer" src="img/tinylogo.png" width="30" height="30" alt="" /></a>
         <input class="search_box left" type="text" placeholder="Search..." id="term" />
-        <button id="search" class="left bigger">GO</button>
+        <button id="search" class="left biggerer">GO</button>
         <button id="ssettings" class="left bigger" onclick="openSearch_options()"><img src="img/settings-gear.png" alt="" width="25" height="25" /></button>
         <button id="account" class="right bigger" onclick="openForm()"><img src="img/account.png" alt="" width="25" height="25" /></button>
         <div class="clearfix"></div>
-        <div id="search_options" style="display: none">
-        <input class="left" type="checkbox" id="available" value="false" style="margin-left: 43px;" />
+        <div id="search_options">
+        <input class="left" type="checkbox" id="available" value="false" />
         <div class="left five" >ONLY AVAILABLE</div>
-        
-        <select style="margin-bottom:10px;margin-top:0;" id="mediatype">
+        <select class="left five" id="mediatype">
             <option value="ALL FORMATS">ALL FORMATS</option>
             <option value="BOOKS">BOOKS</option>
             <option value="MOVIES">MOVIES</option>
             <option value="MUSIC">MUSIC</option>
             <option value="VIDEO GAMES">VIDEO GAMES</option>
         </select>
-        <select style="margin-bottom:10px;margin-top:0;margin-left:5px;" id="location">
+        <select class="left five" id="location">
             <option value="22">ALL LOCATIONS</option>
             <option value="23">WOODMERE</option>
             <option value="25">KINGSLEY</option>
