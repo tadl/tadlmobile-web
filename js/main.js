@@ -139,7 +139,7 @@ function showfeatured() {
         var template = Handlebars.compile($('#featured-template').html());
         var info = template(data);
         $('#featured').html(info);
-        $('#featured').imagesLoaded().done( function( instance ) { 
+        $('#featured').imagesLoaded().always( function( instance ) { 
             $('.load_more').hide();
             $('.image_carousel').show();
         });

@@ -109,7 +109,7 @@ router
 
 <script id="featured-template" type="text/template">
     {{#nodes}}
-        <img onclick="viewitem({{node.item}});return false;" src="https://catalog.tadl.org/opac/extras/ac/jacket/medium/r/{{node.item}}" height="100" />
+        <img onclick="viewitem({{node.item}});return false;" onerror="this.style.display='none';" src="https://catalog.tadl.org/opac/extras/ac/jacket/medium/r/{{node.item}}" height="100" />
     {{/nodes}}
 </script>
 
