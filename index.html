@@ -320,11 +320,11 @@ router
                     <div class="shadow result">
                         <div class="fb_img">
                         {{#if picture}}
-                        {{#if object_id}}
-                            <img src="https://graph.facebook.com/{{object_id}}/picture">
-                        {{else}}
-                        <img src="{{make_https picture}}">
-                        {{/if}}
+                            {{#if object_id}}
+                                <img src="https://graph.facebook.com/{{object_id}}/picture">
+                            {{else}}
+                                <img src="{{make_https picture}}">
+                            {{/if}}
                         {{else}}
                             <img src="img/clocktower100.png">
                         {{/if}}
