@@ -318,21 +318,24 @@ router
             {{#compare application.name "Photos" operator="!="}}
                 {{#compare privacy.value "" operator="!="}}
                     <div class="shadow result">
-                        <div class="result_img">
+                        <div class="fb_img">
                         {{#if picture}}
-                            <img src="{{make_https picture}}">
+                        {{#if object_id}}
+                            <img src="https://graph.facebook.com/{{object_id}}/picture">
+                        {{else}}
+                        <img src="{{make_https picture}}">
+                        {{/if}}
                         {{else}}
                             <img src="img/clocktower100.png">
                         {{/if}}
                         </div>
-                        <span class="linkable" style="font-size:14px;">{{message}}</span><br/>Posted on <span class="shortDateFormat">{{created_time}}</span><br/>
+                        <span class="linkable" style="font-size:14px;">{{message}}</span><br/>Posted on <span class="shortDateFormat">{{created_time}}</span>
                         <span style="font-size:13px; font-style:italic;">{{description}}</span><br/>
                         {{#if caption}}
                             {{#if link}}
                                 <a href="{{link}}" style="font-decoration: none; font-size: 12px;">See More</a>
                             {{/if}}
                         {{/if}}
-                        <br>
                         <span id="{{node.nid}}" style="display:none;">{{node.body}}</span>
                     </div>
                 {{/compare}} 
