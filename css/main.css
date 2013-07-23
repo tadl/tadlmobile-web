@@ -175,6 +175,7 @@ button.bigger {
 button.biggerer {
     font-size:18px;
     padding: 1px 8px 2px;
+    font-weight:bold;
 }
 
 .button {
@@ -253,11 +254,7 @@ th {
 
 .logo {
     margin:0;
-    padding: 3px 2px 4px 3px;
-    background-color: #fff;
-    -webkit-border-top-right-radius: 5px;
-    -webkit-border-bottom-right-radius: 5px;
-    border: 1px solid #ccc;
+    padding: 4px 0px 3px 3px;
 }
 
 #bcTarget {

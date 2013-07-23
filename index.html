@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <base href="/tadlmobile-web/"> 
+    <base href="/tadlmobile-web/">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <link rel="stylesheet" type="text/css" href="css/holo-base-elements.css" />
     <link rel="stylesheet" type="text/css" href="css/holo-light-elements.css" />
@@ -18,7 +18,8 @@
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/jquery.dateFormat-1.0.js"></script>
     <script type="text/javascript" src="js/jquery.history.js"></script>
-    <script type="text/javascript" src="js/staterouter.js"></script>    
+    <script type="text/javascript" src="js/staterouter.js"></script>  
+    <script type="text/javascript" src="cordova-2.7.0.js"></script>  
     <script>
 		document.addEventListener("deviceready", function() {
 		// before this event, window.open likely won't work properly
@@ -26,7 +27,7 @@
 	</script>
 	<script>
     var BASE_URL = '/tadlmobile-web/';
-	var router = new staterouter.Router();
+  	var router = new staterouter.Router();
 // Configure routes
 router
   .route(BASE_URL, showmain)
@@ -46,7 +47,7 @@ router
   .route(BASE_URL + '#checkout', showcheckouts)
   .route(BASE_URL + 'featured', showfeatured)
   .route(BASE_URL + '#featured', showfeatured)
-  .route(BASE_URL + 'search/:query/:mt/:avail', getsearch)
+  .route(BASE_URL + 'search/:query/:mt/:avail/:location', getsearch)
   .route(BASE_URL + 'item/:record_id', viewitem)
   ;
 </script>	
@@ -140,13 +141,17 @@ router
 <body>
 <header class="holo-actionBar">
     <section class="searchform">
+
         <div style="width:100%;">
-            <button id="account" class="bigger" style="position:fixed;right:0;top:0;" onclick="openForm()"><img src="img/account.png" alt="" width="25" height="25" /></button>
-            <a onClick="loadmenu()" class="panel"><img class="left logo pointer" src="img/tinylogo.png" width="30" height="30" alt="" /></a>
-            <input class="search_box left" type="text" placeholder="Search..." id="term" />
-            <button id="search" class="left biggerer">GO</button>
-            <button id="ssettings" class="left bigger" onclick="openSearch_options()"><img src="img/settings-gear.png" alt="" width="25" height="25" /></button>
-        </div>
+            
+            <a onclick="loadmenu()" class="panel"><img class="left logo pointer" src="img/tinylines.png" width="30" height="30" alt="" /></a>
+             <input class="search_box left" type="text" placeholder="Search..." id="term" />
+        <button id="search" class="left biggerer">GO</button>
+        <button id="ssettings" class="left bigger" onclick="openSearch_options()"><img src="img/settings-gear-black.png" alt="" width="25" height="25" /></button>
+        <button id="account" class="right bigger" onclick="openForm()"><img src="img/account-button.png" alt="" width="25" height="25" /></button>
+     </div>
+
+
         <div class="clearfix"></div>
         <div id="search_options">
             <input class="left" type="checkbox" id="available" value="false" />

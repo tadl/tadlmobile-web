@@ -18,7 +18,8 @@ var state = {}
 
 
 $(document).ready(function() {
-    showmain();
+    router.perform();
+    //showmain(); 
     //checkstatus();
     $('#term').keydown(function(event) {
         if (event.keyCode == 13) {
@@ -77,12 +78,8 @@ function loadmore() {
     });
 }
 
-function getResults() {
+function getResults() {      
         cleanhouse();
-        $("#login_form").slideUp("fast");
-        $("#search_options").slideUp("fast");
-        $('#search-params').empty();
-        $('#results').empty().trigger("create");
         $('.load_more').show();
         $('#loadmoretext').empty().append(loadingmoreText).trigger("create");
         pagecount = 0;
@@ -97,10 +94,10 @@ function getResults() {
             var available = "false";
             var availablemsg = "";
         }
-        var newstate = 'search/'+searchquery+'/'+mediatype+'/'+available; 
+        var newstate = 'search/'+searchquery+'/'+mediatype+'/'+available+'/'+loc; 
         var action = {action:"getsearch", query:searchquery, mt:mediatype, avail:available, location:loc}
-        History.pushState(action, "Search", 'search');
-        //History.pushState({action: showcheckouts}, psTitle + "Search", newstate); 
+        //History.pushState(action, "Search", 'search');
+        History.pushState(action, psTitle + "Search", newstate); 
         $.getJSON(ILSCATCHER_INSECURE_BASE + "/main/searchjson.json?utf8=%E2%9C%93&q=" + searchquery + "&mt=" + mediatype +"&avail=" + available + "&loc=" + loc, function(data) {
             var results = data.message;
             state = History.getState();
@@ -189,8 +186,8 @@ function viewitem(record_id) {
     
     cleanhouse();
     var action = {action:"viewitem", record_id:record_id}
-    //History.pushState(action, 'Featured Item ' + record_id, 'item/' + record_id);
-    History.pushState(action, 'Featured Item ' + record_id, 'item');
+    History.pushState(action, 'Featured Item ' + record_id, 'item/' + record_id);
+    //History.pushState(action, 'Featured Item ' + record_id, 'item');
     $('.load_more').show();
     $('#loadmoretext').empty().append(loadingmoreText).trigger("create");
     var record_id = record_id;
@@ -425,10 +422,7 @@ function cancelhold(hold_id) {
 
 function showholds() {
     
-    $("#login_form").slideUp("fast");
-    $("#search_options").slideUp("fast");
-    $('#search-params').empty();
-    $('#results').html("");
+    cleanhouse();
     var action = {action:"showholds"}
     History.pushState(action, "Your Holds", "holds"); 
     //History.pushState({action: showholds}, psTitle + "Holds", "holds"); 
@@ -450,11 +444,7 @@ function showholds() {
 }
 
 function showpickups() {
-    
-    $("#login_form").slideUp("fast");
-    $("#search_options").slideUp("fast");
-    $('#search-params').empty();
-    $('#results').html("");
+   cleanhouse();
     var action = {action:"showpickups"}
     History.pushState(action, "Ready for Pickup", "pickup"); 
     //History.pushState({action: showpickups}, psTitle + "Items Ready for Pickup", "pickup"); 
@@ -505,15 +495,12 @@ function getsearch(query, mt, avail, location) {
     $("#mediatype").val(decodeURIComponent(mt));
     $("#term").val(decodeURIComponent(query));
     $("#location").val(decodeURIComponent(loc));
-
+getResults();
 }
 
 function showcard() {
     
-    $("#login_form").slideUp("fast");
-    $("#search_options").slideUp("fast");
-    $('#search-params').empty();
-    $('#results').html("");
+   cleanhouse();
     var action = {action:"showcard"}
     History.pushState(action, "Your Card", "card"); 
     //History.pushState({action: showcard}, psTitle + "Mobile Library Card", "card"); 
@@ -536,10 +523,7 @@ function showcard() {
 
 function showevents() { 
     
-    $("#login_form").slideUp("fast");
-    $("#search_options").slideUp("fast");
-    $('#search-params').empty();
-    $('#results').html("");
+ cleanhouse();
     var action = {action:"showevents"}
     History.pushState(action, "Upcoming Event", "events"); 
     //History.pushState({action: showevents}, psTitle + "Upcoming Events", "events"); 
@@ -560,10 +544,7 @@ function showevents() {
 
 function showlocations() { 
     
-    $("#login_form").slideUp("fast");
-    $("#search_options").slideUp("fast");
-    $('#search-params').empty();
-    $('#results').html("");
+  cleanhouse();
     var action = {action:"showlocations"}
     History.pushState(action, "Locations", "locations"); 
     //History.pushState({action: showlocations}, psTitle + "Library Locations", "locations"); 
@@ -584,29 +565,21 @@ function showlocations() {
 }
 
 function showmain() {
-    $('#results').html("");
-    $("#login_form").slideUp("fast");
-    $("#search_options").slideUp("fast");
-    $('#search-params').empty();
-    $('.load_more').hide();
+  cleanhouse();
     $('#results').html('<div id="mainpage"><div class="mainlogo"><img class="homelogo" src="img/clean-logo-header.png" alt="" /></div><div class="clearfix"></div><div class="mainlinks"></div><div class="clearfix"></div></div>');
     var action = {action:"showmain"}
     History.pushState(action,  psTitle + "Search and Explore", "main");
     //History.pushState({action: showmain}, psTitle + "Search and Explore", "main");
     state = History.getState();
-if (state.data.action === "showmain") {
-    $('.mainlinks').html($("#menu").html());
+     $('.mainlinks').html($("#menu").html());
     $('#results').show();
     setTimeout(login,1000);
-    }
+    
 }
 
 function facebookfeed() { 
     
-    $("#login_form").slideUp("fast");
-    $("#search_options").slideUp("fast");
-    $('#search-params').empty();
-    $('#results').html("");
+cleanhouse();
     var action = {action:"facebookfeed"}
     History.pushState(action, "Facebook Feed", "facebook"); 
     //History.pushState({action: facebookfeed}, psTitle + "Facebook Feed", "facebook");
@@ -704,8 +677,6 @@ Handlebars.registerHelper('make_https', function(url, options) {
     return https_url;
 });
 
-
-
 function loadmenu() {
 $('#menu').animate({width: 'show'}, 200);
 $('#dark_overlay').show();
@@ -724,10 +695,3 @@ function cleanhouse() {
     $('#search-params').empty();
     $('.load_more').hide();
 }
-
-
-
-
-
-
-
