@@ -49,7 +49,7 @@ input[type="checkbox"] {
     height:22px;
     font-size:16px;
     margin-top:5px;
-    margin-left:5px;
+    margin-left:3px;
 }
 
 .left {
@@ -169,12 +169,12 @@ button {
 
 button.bigger {
     font-size:15px;
-    padding: 1px 8px 2px;
+    padding: 1px 8px 0px;
 }
 
 button.biggerer {
-    font-size:18px;
-    padding: 1px 8px 2px;
+    font-size:20px;
+    padding: 0px 8px 2px;
     font-weight:bold;
 }
 
@@ -254,7 +254,7 @@ th {
 
 .logo {
     margin:0;
-    padding: 4px 0px 3px 3px;
+    padding: 4px 0px 3px 4px;
 }
 
 #bcTarget {
