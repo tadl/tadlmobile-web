@@ -292,14 +292,14 @@ th {
 }
 
 .mainlogo {
-    float:left;
+    position:relative;
     max-width:200px;
     width:100%;
     margin: 0 auto;
 }
 
 .mainlinks {
-    float:left;
+    position:relative;
     max-width:200px;
     width:100%;
     text-align:center;
@@ -308,6 +308,7 @@ th {
 
 .mainlinks .button {
     font-size: 1.3em;
+    padding: 8px 5px;
     width:250px;
 }
 
