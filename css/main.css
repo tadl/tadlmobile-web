@@ -175,6 +175,7 @@ button.bigger {
 button.biggerer {
     font-size:18px;
     padding: 1px 8px 2px;
+    font-weight:bold;
 }
 
 .button {
