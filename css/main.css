@@ -277,6 +277,7 @@ th {
     text-align:center;
 }
 
+
 .barcodelogo {
     float:left;
     max-width:300px;
@@ -313,10 +314,10 @@ th {
     width:250px;
 }
 
-#slidepanel .inner .wrapper a.button {
+#menu a.button {
     width:133px;
     display:inline-block;
-    margin:4px 0;
+    margin:4px 0 0 5px;
     padding:8px 5px;
 }
 .mainlinks a.button {
@@ -329,6 +330,33 @@ th {
 #mainpage {
     max-width: 500px;
     margin:0 auto;
+}
+
+#menu {
+display: none;
+background-color: rgb(221,221,221);
+border-right: 1px solid #ccc;
+box-shadow: 1px 1px 23px rgba(0, 0, 0, 0.17), -1px -1px 0 rgba(255, 255, 255, 0.85) inset;
+position: fixed;
+z-index: 65000;
+display: none;
+width: 168px;
+height: 100%;
+top: 0px;
+left: 0px;
+}
+
+#dark_overlay {
+display: none;
+position:fixed;
+left: 0px;
+top: 0px;
+background-color: #000;
+opacity: 0.5;
+filter: alpha(opacity=50);
+width: 100%;
+height: 100%;
+z-index: 64999;
 }
 
 #search_options {

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <base href="/m/"> 
+    <base href="/tadlmobile-web/"> 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <link rel="stylesheet" type="text/css" href="css/holo-base-elements.css" />
     <link rel="stylesheet" type="text/css" href="css/holo-light-elements.css" />
@@ -25,7 +25,7 @@
 		}, false);
 	</script>
 	<script>
-    var BASE_URL = '/m/';
+    var BASE_URL = '/tadlmobile-web/';
 	var router = new staterouter.Router();
 // Configure routes
 router
@@ -51,61 +51,149 @@ router
   ;
 </script>	
 
-    <title>TADL Mobile | Search and Explore</title>
+   <script>
+    document.addEventListener("deviceready", function() {
+        // before this event, window.open likely won't work properly
+    }, false);
+    document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+        document.addEventListener("backbutton", onBackKeyDown, false);
+    }
+    function onBackKeyDown() {
+        var state = History.getState();
+        $('#results').hide();
+        if (state.data.action === "showmain") {
+            navigator.app.exitApp();
+        } else {   
+            History.back();
+        }
+    }
+    
+    window.onpopstate = function(event) {
+        $('#results').hide();
+        state = History.getState();
+        var message = JSON.stringify(event.state);
+        window.setTimeout(goBack,50); 
+        function goBack() {
+            if (state.data.action === "showholds") {
+                showholds();
+                $('#results').show();
+            }
+            if (state.data.action === "showfeatured") {
+                showfeatured();
+                $('#results').show();
+            }
+            if (state.data.action === "showcheckouts") {
+                showcheckouts();
+                $('#results').show();
+            }
+            if (state.data.action === "showpickups") {
+                showpickups();
+                $('#results').show();
+            }
+            if (state.data.action === "showfeatured") {
+                showfeatured();
+                $('#results').show();
+            }
+            if (state.data.action === "showevents") {
+                showevents();
+                $('#results').show();
+            }
+            if (state.data.action === "showlocations") {
+                showlocations();
+                $('#results').show();
+            }
+            if (state.data.action === "facebookfeed") {
+                facebookfeed();
+                $('#results').show();
+            }
+            if (state.data.action === "viewitem") {
+                viewitem(state.data.record_id);
+                $('#results').show();
+            }
+            if (state.data.action === "showmain") {
+                showmain();
+                $('#results').show();
+            }
+            if (state.data.action === "getsearch") {
+                getsearch(state.data.query, state.data.mt, state.data.avail, state.data.location);
+                getResults();
+                $('#results').show();
+            }
+            if (state.data.action === "showcard") {
+                showcard();
+                $('#results').show();
+            }
+        }
+    }
+</script>
+<title>TADL Mobile Beta</title>
+<style type="text/css">
+{
+    -webkit-transform: translate3d(0,0,0);
+    -moz-transform: translate3d(0,0,0);
+    -ms-transform: translate3d(0,0,0);
+    -o-transform: translate3d(0,0,0);
+}
+</style>
 </head>
-
 <body>
 <header class="holo-actionBar">
     <section class="searchform">
-        <a href="menu.html" data-slidepanel="panel"><img class="left logo pointer" src="img/tinylogo.png" width="30" height="30" alt="" /></a>
-        <input class="search_box left" type="text" placeholder="Search..." id="term" />
-        <button id="search" class="left biggerer">GO</button>
-        <button id="ssettings" class="left bigger" onclick="openSearch_options()"><img src="img/settings-gear.png" alt="" width="25" height="25" /></button>
-        <button id="account" class="right bigger" onclick="openForm()"><img src="img/account.png" alt="" width="25" height="25" /></button>
+        <div style="width:100%;">
+            <button id="account" class="bigger" style="position:fixed;right:0;top:0;" onclick="openForm()"><img src="img/account.png" alt="" width="25" height="25" /></button>
+            <a onClick="loadmenu()" class="panel"><img class="left logo pointer" src="img/tinylogo.png" width="30" height="30" alt="" /></a>
+            <input class="search_box left" type="text" placeholder="Search..." id="term" />
+            <button id="search" class="left biggerer">GO</button>
+            <button id="ssettings" class="left bigger" onclick="openSearch_options()"><img src="img/settings-gear.png" alt="" width="25" height="25" /></button>
+        </div>
         <div class="clearfix"></div>
         <div id="search_options">
-        <input class="left" type="checkbox" id="available" value="false" />
-        <div class="left five" >ONLY AVAILABLE</div>
-        <select class="left five" id="mediatype">
-            <option value="ALL FORMATS">ALL FORMATS</option>
-            <option value="BOOKS">BOOKS</option>
-            <option value="MOVIES">MOVIES</option>
-            <option value="MUSIC">MUSIC</option>
-            <option value="VIDEO GAMES">VIDEO GAMES</option>
-        </select>
-        <select class="left five" id="location">
-            <option value="22">ALL LOCATIONS</option>
-            <option value="23">WOODMERE</option>
-            <option value="25">KINGSLEY</option>
-            <option value="24">INTERLOCHEN</option>
-            <option value="27">FIFE LAKE</option>
-            <option value="28">EAST BAY</option>
-            <option value="26">PENINSULA</option>
-        </select>
+            <input class="left" type="checkbox" id="available" value="false" />
+            <div class="left five">ONLY AVAILABLE</div>
+            <div class="left five"></div>
+            <select class="left five" id="mediatype">
+                <option value="ALL FORMATS">ALL FORMATS</option>
+                <option value="BOOKS">BOOKS</option>
+                <option value="MOVIES">MOVIES</option>
+                <option value="MUSIC">MUSIC</option>
+                <option value="VIDEO GAMES">VIDEO GAMES</option>
+            </select>
+            <div class="left five"></div>
+            <select class="left five" id="location">
+                <option value="22">ALL LOCATIONS</option>
+                <option value="23">WOODMERE</option>
+                <option value="25">KINGSLEY</option>
+                <option value="24">INTERLOCHEN</option>
+                <option value="27">FIFE LAKE</option>
+                <option value="28">EAST BAY</option>
+            </select>
         </div>
     </section>
   
     <div id="login_form">
-    Username: <input type="text" id="username" /><br />
-    Password: <input type="password" id="pword" /><br />
-    <button id="login" onclick="login()">Login</button>
-    <span id="login_msg"></span>
+        Username: <input type="text" id="username" /><br />
+        Password: <input type="password" id="pword" /><br />
+        <button id="login" onclick="login()">Login</button>
+        <span id="login_msg"></span>
     </div>
 </header>
 
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('[data-slidepanel]').slidepanel({
-            orientation: 'left',
-            mode: 'overlay'
-        });
-    });
-</script>
-<div id="search-params">
 
+<div id="menu">
+<br/>
+<a onclick="showfeatured(); $('.close').trigger('click');" class="menufeatured button">Featured</a><br/>
+<a onclick="showlocations(); $('.close').trigger('click');" class="menulocations button">Locations</a><br/>
+<a onclick="showevents(); $('.close').trigger('click');" class="menuevents button">Events</a><br/>
+<a onclick="facebookfeed(); $('.close').trigger('click');" class="menufacebook button">Facebook</a><br/>
+<a class="button" href="http://www.tadl.org/?nomobi=true">Full Site</a>
 </div>
-<div id="results">
-</div>
+<div id="dark_overlay" onClick="$('#dark_overlay').hide(); hidemenu();"></div>
+
+
+<div id="status-messages"></div>
+<div id="search-params"></div>
+<div id="results"></div>
 
 <script id="featured-template" type="text/template">
     {{#nodes}}
@@ -131,7 +219,7 @@ router
                 <a class="actionlink" id="place_hold_{{:item.:record_id}}" onclick="pre_hold({{:item.:record_id}})">Place Hold</a> 
             {{/compare}}
             {{#compare :item.:copies_available null operator="=="}}
-                <a class="actionlink external" href="{{:item.:eresource}}");">View Online</a>
+                <a class="actionlink external" onclick="navigator.app.loadUrl('{{:item.:eresource}}', {openExternal: true});">View Online</a>
             {{/compare}}
         </div></div>
         <div class="clearfix"></div>
@@ -192,7 +280,7 @@ router
                 <a class="actionlink" id="place_hold_{{:item.:record_id}}" onclick="pre_hold({{:item.:record_id}})">Place Hold</a> 
             {{/compare}}
             {{#compare :item.:copies_available null operator="=="}}
-                <a class="actionlink external" href="{{:item.:eresource}}");">View Online</a>
+                <a class="actionlink external" onclick="navigator.app.loadUrl('{{:item.:eresource}}', {openExternal: true});">View Online</a>
             {{/compare}}
         </div>
         </div>
@@ -294,7 +382,7 @@ router
         <h3 style="padding:0;margin:0;">{{node.fullname}}</h3>
         {{node.address}}<br/>
         {{node.citystatezip}}<br/>
-        {{node.phone}}<br/>
+        <a href="tel:{{node.phone}}">{{node.phone}}</a><br/>
         <span id="more{{node.shortname}}" class="viewmore">view hours</span>
         <span id="{{node.shortname}}" style="display:none;">
         <table>
