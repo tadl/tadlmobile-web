@@ -326,7 +326,8 @@ th {
 }
 
 #mainpage {
-    max-width: 500px;
+    width:100%;
+    max-width: 480px;
     margin:0 auto;
 }
 
