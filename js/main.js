@@ -499,7 +499,6 @@ getResults();
 }
 
 function showcard() {
-    
    cleanhouse();
     var action = {action:"showcard"}
     History.pushState(action, "Your Card", "card"); 

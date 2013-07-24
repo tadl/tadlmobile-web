@@ -263,7 +263,6 @@ th {
 
 .barcode {
     float:left;
-    width:100%;
     max-width:300px;
     margin:15px auto;
 }
@@ -278,7 +277,6 @@ th {
 .barcodelogo {
     float:left;
     max-width:300px;
-    width:100%;
     margin:0 auto;
 }
 
