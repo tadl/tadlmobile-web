@@ -262,20 +262,17 @@ th {
 }
 
 .barcode {
-    float:left;
     max-width:300px;
     margin:15px auto;
 }
 
 #barcodepage {
-    width:100%;
     margin:0 auto;
     text-align:center;
 }
 
 
 .barcodelogo {
-    float:left;
     max-width:300px;
     margin:0 auto;
 }
