@@ -567,7 +567,7 @@ function showmain() {
   cleanhouse();
     $('#results').html('<div id="mainpage"><div class="mainlogo"><img class="homelogo" src="img/clean-logo-header.png" alt="" /></div><div class="clearfix"></div><div class="mainlinks"></div><div class="clearfix"></div></div>');
     var action = {action:"showmain"}
-    History.pushState(action,  psTitle + "Search and Explore", "main");
+    History.pushState(action,  psTitle + "Search and Explore", "");
     //History.pushState({action: showmain}, psTitle + "Search and Explore", "main");
     state = History.getState();
      $('.mainlinks').html($("#menu").html());

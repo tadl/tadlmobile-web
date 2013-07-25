@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <base href="/m/">
+    <base href="/tadlmobile-web/">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <link rel="stylesheet" type="text/css" href="css/holo-base-elements.css" />
     <link rel="stylesheet" type="text/css" href="css/holo-light-elements.css" />
@@ -26,7 +26,7 @@
 		}, false);
 	</script>
 	<script>
-    var BASE_URL = '/m/';
+    var BASE_URL = '/tadlmobile-web/';
   	var router = new staterouter.Router();
 // Configure routes
 router
@@ -71,6 +71,7 @@ router
     }
     
     window.onpopstate = function(event) {
+        if (!event.state) return;
         $('#results').hide();
         state = History.getState();
         var message = JSON.stringify(event.state);
