@@ -202,7 +202,7 @@ router
     {{/nodes}}
 </script>
 
-<script id="result-details-template" type="text/template"><!-- // to display a record from slider -->
+<script id="result-details-template" type="text/template">
     {{#:items}}
         <div class="shadow result">
         <img class="result_img" onload="img_check(this);" onerror="img_error(this);" src="{{make_https :item.:image}}">
@@ -220,7 +220,7 @@ router
                 <a class="actionlink" id="place_hold_{{:item.:record_id}}" onclick="pre_hold({{:item.:record_id}})">Place Hold</a> 
             {{/compare}}
             {{#compare :item.:copies_available null operator="=="}}
-                <a class="actionlink external" onclick="navigator.app.loadUrl('{{:item.:eresource}}', {openExternal: true});">View Online</a>
+                <a class="actionlink external" onclick="try { navigator.app.loadUrl('{{:item.:eresource}}', {openExternal: true}); } finally { window.location = '{{:item.:eresource}}'; }">View Online</a>
             {{/compare}}
         </div></div>
         <div class="clearfix"></div>
@@ -266,7 +266,7 @@ router
         <div id="{{:item.:record_id}}" style="display:none;"></div>
         <div id="{{:item.:record_id}}-loading"></div> 
         <div class="clearfix"></div>
-        </div><!-- //shadow result -->
+        </div>
     {{/:items}}
 </script>
 
@@ -281,7 +281,7 @@ router
                 <a class="actionlink" id="place_hold_{{:item.:record_id}}" onclick="pre_hold({{:item.:record_id}})">Place Hold</a> 
             {{/compare}}
             {{#compare :item.:copies_available null operator="=="}}
-                <a class="actionlink external" onclick="navigator.app.loadUrl('{{:item.:eresource}}', {openExternal: true});">View Online</a>
+                <a class="actionlink external" onclick="try { navigator.app.loadUrl('{{:item.:eresource}}', {openExternal: true}); } finally { window.location = '{{:item.:eresource}}'; }">View Online</a>
             {{/compare}}
         </div>
         </div>
