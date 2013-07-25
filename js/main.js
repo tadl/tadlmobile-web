@@ -508,7 +508,7 @@ function showmain() {
     var action = {action:"showmain"}
     History.pushState(action,  psTitle + "Search and Explore", "");
     state = History.getState();
-    $('.mainlinks').html($("#menu").html());
+    $('.mainlinks').html('<a onclick="showfeatured();" class="button">Featured</a><br/><a onclick="showlocations();" class="button">Locations</a><br/><a onclick="showevents();" class="button">Events</a><br/><a onclick="facebookfeed();" class="button">Facebook</a><br/><a class="button" href="http://www.tadl.org/?nomobi=true">Full Site</a>');
     $('#results').show();
     setTimeout(login,1000);
 }

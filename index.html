@@ -183,12 +183,18 @@ router
 
 
 <div id="menu">
-<br/>
-<a onclick="showfeatured();" class="menufeatured button">Featured</a><br/>
-<a onclick="showlocations();" class="menulocations button">Locations</a><br/>
-<a onclick="showevents();" class="menuevents button">Events</a><br/>
-<a onclick="facebookfeed();" class="menufacebook button">Facebook</a><br/>
-<a class="button" href="http://www.tadl.org/?nomobi=true">Full Site</a>
+<div class="menuitem red" onclick="showfeatured();">Featured</div>
+<div class="menuitem orange" onclick="showlocations();">Locations</div>
+<div class="menuitem yellow" onclick="showevents();">Events</div>
+<div class="menuitem green" onclick="facebookfeed();">Facebook</div>
+<div class="menuitem blue" onclick="window.location='http://www.tadl.org/?nomobi=true';">Full Site</div>
+<!--
+<a onclick="showfeatured();" class="">Featured</a><br/>
+<a onclick="showlocations();" class="">Locations</a><br/>
+<a onclick="showevents();" class="">Events</a><br/>
+<a onclick="facebookfeed();" class="">Facebook</a><br/>
+<a class="" href="http://www.tadl.org/?nomobi=true">Full Site</a>
+-->
 </div>
 <div id="dark_overlay" onClick="$('#dark_overlay').hide(); hidemenu();"></div>
 
