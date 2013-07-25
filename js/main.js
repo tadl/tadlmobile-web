@@ -15,32 +15,22 @@ var version_id = '3';
 var pagecount = {}
 var state = {}
 
-
-
 $(document).ready(function() {
     router.perform();
-    //showmain(); 
-    //checkstatus();
     $('#term').keydown(function(event) {
-        if (event.keyCode == 13) {
-            getResults();
-        }
+        if (event.keyCode == 13) { getResults(); }
     });
     $('#login_form').keydown(function(event) {
-        if (event.keyCode == 13) {
-            login();
-        }
+        if (event.keyCode == 13) { login(); }
     });
-    
     $('#search').click(getResults);
 });
 
-
 function checkstatus() {
-      var networkState = navigator.network.connection.type;
-      if (networkState == 'none') {
+    var networkState = navigator.network.connection.type;
+    if (networkState == 'none') {
         $('#status-messages').html('<div style="text-align:center; margin-top: 5px; margin-bottom: 10px; font-size: 20px; color: #ff201a ;">Network Connection Required</div>');
-     } else {
+    } else {
         $.get(ILSCATCHER_INSECURE_BASE + "/main/checkupdates.json?version_id=" + version_id + "&platform=" + platform, function(data) {
             var message = data.message
             var update_link = data.update_link 
@@ -48,7 +38,7 @@ function checkstatus() {
                 $('#status-messages').html('<div style="text-align:center; margin-top: 5px; margin-bottom: 10px;"><a class="button" href="'+ update_link +'">'+ data.message +'</a></div>');
             }
         });
-   } 
+    }
 }
 
 function loadmore() {
@@ -70,7 +60,7 @@ function loadmore() {
                 $('#loadmoretext').empty().append(loadmoreText);
                 $('#loadmoretext').trigger("create");
                 $("#login_form").slideUp("fast");
-            })
+            });
         } else {
             $('#loadmoretext').html("No Further Results");
         }
@@ -79,30 +69,28 @@ function loadmore() {
 }
 
 function getResults() {      
-        cleanhouse();
-        $('.load_more').show();
-        $('#loadmoretext').empty().append(loadingmoreText).trigger("create");
-        pagecount = 0;
-        var searchquery = $('#term').val();
-        var mediatype = $('#mediatype').val();
-        var loc = $('#location').val();
-        loctext = document.getElementById("location").options[document.getElementById('location').selectedIndex].text;
-        if (document.getElementById('available').checked) {
-            var available = "true";
-            var availablemsg = "ONLY AVAILABLE";
-        } else {
-            var available = "false";
-            var availablemsg = "";
-        }
-        var newstate = 'search/'+searchquery+'/'+mediatype+'/'+available+'/'+loc; 
-        var action = {action:"getsearch", query:searchquery, mt:mediatype, avail:available, location:loc}
-        //History.pushState(action, "Search", 'search');
-        History.pushState(action, psTitle + "Search", newstate); 
-        $.getJSON(ILSCATCHER_INSECURE_BASE + "/main/searchjson.json?utf8=%E2%9C%93&q=" + searchquery + "&mt=" + mediatype +"&avail=" + available + "&loc=" + loc, function(data) {
-            var results = data.message;
-            state = History.getState();
-      
-        if (state.data.action === "getsearch" && state.data.query === searchquery && state.data.mt === mediatype && state.data.avail === available && state.data.location === loc)  {
+    cleanhouse();
+    $('.load_more').show();
+    $('#loadmoretext').empty().append(loadingmoreText).trigger("create");
+    pagecount = 0;
+    var searchquery = $('#term').val();
+    var mediatype = $('#mediatype').val();
+    var loc = $('#location').val();
+    loctext = document.getElementById("location").options[document.getElementById('location').selectedIndex].text;
+    if (document.getElementById('available').checked) {
+        var available = "true";
+        var availablemsg = "ONLY AVAILABLE";
+    } else {
+        var available = "false";
+        var availablemsg = "";
+    }
+    var newstate = 'search/'+searchquery+'/'+mediatype+'/'+available+'/'+loc; 
+    var action = {action:"getsearch", query:searchquery, mt:mediatype, avail:available, location:loc}
+    History.pushState(action, psTitle + "Search", newstate); 
+    $.getJSON(ILSCATCHER_INSECURE_BASE + "/main/searchjson.json?utf8=%E2%9C%93&q=" + searchquery + "&mt=" + mediatype +"&avail=" + available + "&loc=" + loc, function(data) {
+        var results = data.message;
+        state = History.getState();
+        if (state.data.action === "getsearch" && state.data.query === searchquery && state.data.mt === mediatype && state.data.avail === available && state.data.location === loc) {
             if (results != "no results") {
                 var template = Handlebars.compile($('#results-template').html());
                 var info = template(data);
@@ -112,12 +100,11 @@ function getResults() {
                 $('#search-params').html('Searching for '+ searchquery +' in ' + mediatype + ' at ' + loctext + ' ' + availablemsg + '. <a onclick="openSearch_options()">options...</a>');
             } else {
                 $('#results').html("No Results");
-                 $('.load_more').hide();
+                $('.load_more').hide();
             }
-            }
-        });
-        
-    }
+        }
+    });
+}
 
 function logged_in() {
     var username = window.localStorage.getItem('username');
@@ -131,7 +118,7 @@ function logged_in() {
 function logout() {
     $("#login_form").html('Username: <input type="text" id="username" /><br /> Password: <input type="password" id="pword" /><br /><button id="login" onclick="login()">Login</button><span id="login_msg"></span>'); 
     window.localStorage.clear();
-     showmain();    
+    showmain();    
 }
 
 function showmore(record_id) {
@@ -157,52 +144,45 @@ function showmore(record_id) {
 }
 
 function showfeatured() {
-    
     cleanhouse();
     $('#search-params').empty();
-    //History.pushState({action: showfeatured}, psTitle + "Featured Items", "featured");
     var action = {action:"showfeatured"}
     History.pushState(action, "Featured Items", "featured");
     state = History.getState();
     if (state.data.action === "showfeatured") {
-    $('#results').html('<div class="image_carousel"><div id="featured"></div><div class="clearfix"></div></div>');
-  
-    $('.load_more').show();
-    $('.image_carousel').hide();
-    $('#loadmoretext').empty().append(loadingmoreText).trigger("create");
-    $.getJSON(FEATURED_URL, function(data) {
-        var template = Handlebars.compile($('#featured-template').html());
-        var info = template(data);
-        $('#featured').html(info);
-        $('#featured').imagesLoaded().always( function( instance ) { 
-            $('.load_more').hide();
-            $('.image_carousel').show();
+        $('#results').html('<div class="image_carousel"><div id="featured"></div><div class="clearfix"></div></div>');
+        $('.load_more').show();
+        $('.image_carousel').hide();
+        $('#loadmoretext').empty().append(loadingmoreText).trigger("create");
+        $.getJSON(FEATURED_URL, function(data) {
+            var template = Handlebars.compile($('#featured-template').html());
+            var info = template(data);
+            $('#featured').html(info);
+            $('#featured').imagesLoaded().always( function( instance ) { 
+                $('.load_more').hide();
+                $('.image_carousel').show();
+            });
         });
-    });
     }
 }
 
 function viewitem(record_id) {
-    
     cleanhouse();
     var action = {action:"viewitem", record_id:record_id}
     History.pushState(action, 'Featured Item ' + record_id, 'item/' + record_id);
-    //History.pushState(action, 'Featured Item ' + record_id, 'item');
     $('.load_more').show();
     $('#loadmoretext').empty().append(loadingmoreText).trigger("create");
     var record_id = record_id;
     state = History.getState();
-    
     $.getJSON(ILSCATCHER_INSECURE_BASE + "/main/itemdetails.json?utf8=%E2%9C%93&record_id=" + record_id, function(data) {
         var results = data.message;
         var template = Handlebars.compile($('#result-details-template').html());
         var info = template(data);
         if (state.data.action === "viewitem") {
-        $('#results').html(info).promise().done(function() {  $('#loadmoretext').empty();});
-        $('#'+ record_id).css('display', 'block');
+            $('#results').html(info).promise().done(function() {  $('#loadmoretext').empty();});
+            $('#'+ record_id).css('display', 'block');
         }
     });
-  
 }
 
 function unhide(eventId) {
@@ -267,19 +247,15 @@ function hold(record_id) {
         var message = data[':message'];
         var success = false;
         var button_id = '#place_hold_' + record_id;
-
         if (message == 'Hold was successfully placed') {
             success = true;
         }
-
         if (message) {
             $(button_id).html(message);
         } else {
             $(button_id).html('Unable to place hold.');
         }
-
         $(button_id).css('color', (success) ? 'green' : 'red');
-
     });
     window.setTimeout(partB,5000);
 }
@@ -311,20 +287,13 @@ function openSearch_options() {
         $("#search_options").slideDown("fast");
     } else {
         $("#search_options").slideUp("fast");
-        
     }
 }
 
-
 function login() {
-    // login() will always be called by the login button,
-    // and will not consult localStorage
     var username = $('#username').val();
     var password = $('#pword').val();
-
-    if (typeof(username) !== 'undefined' && username != '' && typeof(password) !== 'undefined' && password != '') { /* only attempt login if we have a username and password */
-        // Here, we blindly store the username/password before knowing if they are valid
-        // login_and_fetch_dash will clear localStorage if there is a problem logging in
+    if (typeof(username) !== 'undefined' && username != '' && typeof(password) !== 'undefined' && password != '') {
         window.localStorage.setItem('username', username);
         window.localStorage.setItem('password', password);
         login_and_fetch_dash(username, password);
@@ -332,41 +301,34 @@ function login() {
 }
 
 function login_and_fetch_dash(username, password) {
-    // login() passes a username/password
     var username = username;
     var password = password;
-
-    // If we weren't called by login() and don't have a username/password,
-    // attempt to retrieve from localStorage
     if (typeof(username) == 'undefined' || typeof(password) == 'undefined') {
         username = window.localStorage.getItem('username');
         password = window.localStorage.getItem('password');
     }
-
-    // If we have a non-empty username and password, try to log in
     if (typeof(username) !== 'undefined' && username != '' && username !== null
         && typeof(password) !== 'undefined' && password != '' && password !== null) {
-        if ($('#pword').length != 0) { /* If the password / pword element exists */
+        if ($('#pword').length != 0) {
             $('#login_form').html('Logging in...');
         }
-        if ($('#login').length != 0) { /* if the login (logout) button exists */
+        if ($('#login').length != 0) {
             $('#login').prop("onclick", null);
             $('#login').html('Refreshing...');
         }
         $.getJSON(ILSCATCHER_BASE + '/main/login.json?u='+ username +'&pw=' + password, function(data) {
-            if (data['status'] == 'error') { /* unsuccessful login */
+            if (data['status'] == 'error') {
                 $("#login_form").html('Username: <input type="text" id="username" /><br /> Password: <input type="password" id="pword" /><br /><button id="login" onclick="login()">Login</button><span id="login_msg"></span>'); 
     			window.localStorage.clear();
                 $('#login_msg').html('Error logging in.');
-            } else { /* login appears successful */
+            } else {
                 render_dash(data);
-                reset_hold_links(); /* change any 'Please log in first' hold links */
+                reset_hold_links();
             }
         });
     } else {
-        // Either username or password was empty, reset things
-         $("#login_form").html('Username: <input type="text" id="username" /><br /> Password: <input type="password" id="pword" /><br /><button id="login" onclick="login()">Login</button><span id="login_msg"></span>'); 
-   		 window.localStorage.clear();
+        $("#login_form").html('Username: <input type="text" id="username" /><br /> Password: <input type="password" id="pword" /><br /><button id="login" onclick="login()">Login</button><span id="login_msg"></span>'); 
+        window.localStorage.clear();
     }
 }
 
@@ -381,13 +343,11 @@ function showcheckouts() {
     cleanhouse();
     var action = {action:"showcheckouts"}
     History.pushState(action, "Your Checkedout Items", "checkout");   
-    //History.pushState({action: showcheckouts}, psTitle + "Checked-Out Items", "checkout");  
     $('.load_more').show();
     $('#loadmoretext').empty().append(loadingmoreText).trigger("create");
     var username = window.localStorage.getItem('username');
     var password = window.localStorage.getItem('password');
     state = History.getState();
-    
     $.getJSON(ILSCATCHER_BASE + '/main/showcheckouts.json?u='+ username +'&pw=' + password, function(data) {
         var template = Handlebars.compile($('#showcheckedout-template').html());
         var info = template(data);
@@ -396,8 +356,6 @@ function showcheckouts() {
         $('.load_more').hide();
          }
     });
-   
-    
 }
 
 function pre_cancelhold(element, hold_id) {
@@ -407,7 +365,7 @@ function pre_cancelhold(element, hold_id) {
     var canceling_text = 'Canceling hold...';
     $(element).css('color', 'red');
     $(element).html(confirm_text);
-    $(element).prop("onclick", null); /* remove existing onclick */
+    $(element).prop("onclick", null);
     $(element).on("click", function(event) {$(this).off('click'); $(this).html(canceling_text); cancelhold(hold_id);});
 }
 
@@ -421,17 +379,14 @@ function cancelhold(hold_id) {
 }
 
 function showholds() {
-    
     cleanhouse();
     var action = {action:"showholds"}
     History.pushState(action, "Your Holds", "holds"); 
-    //History.pushState({action: showholds}, psTitle + "Holds", "holds"); 
     $('.load_more').show();
     $('#loadmoretext').empty().append(loadingmoreText).trigger("create");
     var username = window.localStorage.getItem('username');
     var password = window.localStorage.getItem('password'); 
     state = History.getState();
-    
     $.getJSON(ILSCATCHER_BASE + '/main/showholds.json?u='+ username +'&pw=' + password, function(data) {
         var template = Handlebars.compile($('#showholds-template').html());
         var info = template(data);
@@ -444,27 +399,23 @@ function showholds() {
 }
 
 function showpickups() {
-   cleanhouse();
+    cleanhouse();
     var action = {action:"showpickups"}
     History.pushState(action, "Ready for Pickup", "pickup"); 
-    //History.pushState({action: showpickups}, psTitle + "Items Ready for Pickup", "pickup"); 
     $('.load_more').show();
     $('#loadmoretext').empty().append(loadingmoreText).trigger("create");   
     var username = window.localStorage.getItem('username');
     var username = window.localStorage.getItem('username');
     var password = window.localStorage.getItem('password'); 
     state = History.getState();
-    
     $.getJSON(ILSCATCHER_BASE + '/main/showpickups.json?u='+ username +'&pw=' + password, function(data) {
         var template = Handlebars.compile($('#showholds-template').html());
         var info = template(data);
         if (state.data.action === "showpickups") {
-       $('#results').html(info);
-        $('.load_more').hide(); 
+            $('#results').html(info);
+            $('.load_more').hide(); 
         }
     });
-    
-    
 }
 
 function renew(element, circulation_id, barcode) {
@@ -495,60 +446,50 @@ function getsearch(query, mt, avail, location) {
     $("#mediatype").val(decodeURIComponent(mt));
     $("#term").val(decodeURIComponent(query));
     $("#location").val(decodeURIComponent(loc));
-getResults();
+    getResults();
 }
 
 function showcard() {
-   cleanhouse();
+    cleanhouse();
     var action = {action:"showcard"}
     History.pushState(action, "Your Card", "card"); 
-    //History.pushState({action: showcard}, psTitle + "Mobile Library Card", "card"); 
     $('.load_more').show();
     $('#loadmoretext').empty().append(loadingmoreText).trigger("create");
     var username = window.localStorage.getItem('username');
     var password = window.localStorage.getItem('password'); 
     state = History.getState();
     $.getJSON(ILSCATCHER_BASE + '/main/showcard.json?u='+ username +'&pw=' + password, function(data) {
-     if (state.data.action === "showcard") {   
-        var card = data.barcode;
-        $('.load_more').hide();
-        $('#results').empty().append('<div class="shadow result"><div id="barcodepage"><div class="barcode"><div id="bcTarget"></div></div><div class="barcodelogo"><div class="bclogoTarget"><img src="img/clean-logo-header.png" alt="" /></div></div><div class="clearfix"></div></div></div>');
-        $("#bcTarget").barcode(card, "code128", {barWidth:2, barHeight:80, fontSize:12}); 
-     }
-	});
+        if (state.data.action === "showcard") {   
+            var card = data.barcode;
+            $('.load_more').hide();
+            $('#results').empty().append('<div class="shadow result"><div id="barcodepage"><div class="barcode"><div id="bcTarget"></div></div><div class="barcodelogo"><div class="bclogoTarget"><img src="img/clean-logo-header.png" alt="" /></div></div><div class="clearfix"></div></div></div>');
+            $("#bcTarget").barcode(card, "code128", {barWidth:2, barHeight:80, fontSize:12}); 
+        }
+    });
 }
 
-
-
 function showevents() { 
-    
- cleanhouse();
+    cleanhouse();
     var action = {action:"showevents"}
     History.pushState(action, "Upcoming Event", "events"); 
-    //History.pushState({action: showevents}, psTitle + "Upcoming Events", "events"); 
     state = History.getState();
-    
     $('.load_more').show();
     $('#loadmoretext').empty().append(loadingmoreText).trigger("create");
     $.getJSON(EVENTS_URL, function(data) {
         var template = Handlebars.compile($('#showevents-template').html());
         var info = template(data);
         if (state.data.action === "showevents") {
-        $('.load_more').hide();
-        $('#results').html(info);
+            $('.load_more').hide();
+            $('#results').html(info);
         }
     });
-    
 }
 
 function showlocations() { 
-    
-  cleanhouse();
+    cleanhouse();
     var action = {action:"showlocations"}
     History.pushState(action, "Locations", "locations"); 
-    //History.pushState({action: showlocations}, psTitle + "Library Locations", "locations"); 
     state = History.getState();
-    
     $('.load_more').show();
     $('#loadmoretext').empty().append(loadingmoreText).trigger("create");
     $.getJSON(LOCATIONS_BASE + "/all", function(data) {
@@ -556,67 +497,55 @@ function showlocations() {
         var info = template(data);
         $('.load_more').hide();
         if (state.data.action === "showlocations") {
-        $('#results').html(info);
+            $('#results').html(info);
         }
     });
-    
-    
 }
 
 function showmain() {
-  cleanhouse();
+    cleanhouse();
     $('#results').html('<div id="mainpage"><div class="mainlogo"><img class="homelogo" src="img/clean-logo-header.png" alt="" /></div><div class="clearfix"></div><div class="mainlinks"></div><div class="clearfix"></div></div>');
     var action = {action:"showmain"}
     History.pushState(action,  psTitle + "Search and Explore", "");
-    //History.pushState({action: showmain}, psTitle + "Search and Explore", "main");
     state = History.getState();
-     $('.mainlinks').html($("#menu").html());
+    $('.mainlinks').html($("#menu").html());
     $('#results').show();
     setTimeout(login,1000);
-    
 }
 
 function facebookfeed() { 
-    
-cleanhouse();
+    cleanhouse();
     var action = {action:"facebookfeed"}
     History.pushState(action, "Facebook Feed", "facebook"); 
-    //History.pushState({action: facebookfeed}, psTitle + "Facebook Feed", "facebook");
     state = History.getState();
-
     $('.load_more').show();
     $('#loadmoretext').empty().append(loadingmoreText).trigger("create");
     $.getJSON(FACEBOOK_URL, function(data) {
         var template = Handlebars.compile($('#facebookfeed-template').html());
         var info = template(data);
         if (state.data.action === "facebookfeed") { 
-        $('.load_more').hide();
-        $('#results').html(info);
-        $('.linkable').doLinks();
-        $(".shortDateFormat").each(function (idx, elem) {
-            if ($(elem).is(":input")) {
-                $(elem).val($.format.date($(elem).val(), 'MM/dd/yyyy'));
-            } else {
-                $(elem).text($.format.date($(elem).text(), 'MM/dd/yyyy'));
-            }
-        });
+            $('.load_more').hide();
+            $('#results').html(info);
+            $('.linkable').doLinks();
+            $(".shortDateFormat").each(function (idx, elem) {
+                if ($(elem).is(":input")) {
+                    $(elem).val($.format.date($(elem).val(), 'MM/dd/yyyy'));
+                } else {
+                    $(elem).text($.format.date($(elem).text(), 'MM/dd/yyyy'));
+                }
+            });
         }
     });
-    
-    
 }
 
 function linkify(inputText, options) {
     this.options = {linkClass: 'url', targetBlank: true}
     this.options = $.extend(this.options, options);
     inputText = inputText.replace(/\u200B/g, "");
-
     var replacePattern1 = /(src="|href="|">|\s>)?(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;ï]*[-A-Z0-9+&@#\/%=~_|ï]/gim;
     var replacedText = inputText.replace(replacePattern1, function($0,$1){ return $1?$0:'<br/><a class="'+ this.options.linkClass + '" onclick="navigator.app.loadUrl(\'' + $0 + '?nomobi=true\', {openExternal: true});"' + (this.options.targetBlank?'target="_blank"':'') + '>'+ $0.trunc(32) + '</a>';});
-
     var replacePattern2 = /(src="|href="|">|\s>|https?:\/\/|ftp:\/\/)?www\.[-A-Z0-9+&@#\/%?=~_|!:,.;ï]*[-A-Z0-9+&@#\/%=~_|ï]/gim;
     var replacedText = replacedText.replace(replacePattern2, function($0,$1){ return $1?$0:'<br/><a class="'+ this.options.linkClass + '" onclick="navigator.app.loadUrl(\'http://' + $0 + '?nomobi=true\', {openExternal: true});"' + (this.options.targetBlank?'target="_blank"':'') + '>'+ $0.trunc(32) + '</a>';});
-
     return replacedText;
 }
 
@@ -646,7 +575,6 @@ function img_error(img) {
 Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     if (arguments.length < 3)
         throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
-
     operator = options.hash.operator || "==";
     var operators = {
         '==':       function(l,r) { return l == r; },
@@ -660,9 +588,7 @@ Handlebars.registerHelper('compare', function(lvalue, rvalue, options) {
     }
     if (!operators[operator])
         throw new Error("Handlerbars Helper 'compare' doesn't know the operator "+operator);
-
     var result = operators[operator](lvalue,rvalue);
-
     if( result ) {
         return options.fn(this);
     } else {
@@ -677,13 +603,13 @@ Handlebars.registerHelper('make_https', function(url, options) {
 });
 
 function loadmenu() {
-$('#menu').animate({width: 'show'}, 200);
-$('#dark_overlay').show();
+    $('#menu').animate({width: 'show'}, 200);
+    $('#dark_overlay').show();
 }
 
 function hidemenu() {
-$('#menu').animate({width: 'hide'}, 200);
-$('#dark_overlay').hide();
+    $('#menu').animate({width: 'hide'}, 200);
+    $('#dark_overlay').hide();
 }
 
 function cleanhouse() {
