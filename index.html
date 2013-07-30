@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <base href="/m/">
+    <base href="/tadlmobile-web/">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <link rel="stylesheet" type="text/css" href="css/holo-base-elements.css" />
     <link rel="stylesheet" type="text/css" href="css/holo-light-elements.css" />
@@ -17,14 +17,13 @@
     <script type="text/javascript" src="js/jquery.dateFormat-1.0.js"></script>
     <script type="text/javascript" src="js/jquery.history.js"></script>
     <script type="text/javascript" src="js/staterouter.js"></script>
-    <script type="text/javascript" src="cordova-2.7.0.js"></script>
     <script>
 		document.addEventListener("deviceready", function() {
 		// before this event, window.open likely won't work properly
 		}, false);
 	</script>
 	<script>
-    var BASE_URL = '/m/';
+    var BASE_URL = '/tadlmobile-web/';
   	var router = new staterouter.Router();
 // Configure routes
 router
@@ -46,7 +45,7 @@ router
   .route(BASE_URL + 'featured', showfeatured)
   .route(BASE_URL + '#featured', showfeatured)
   .route(BASE_URL + 'search/:query/:mt/:avail/:location', getsearch)
-  .route(BASE_URL + 'item/:record_id', viewitem)
+  .route(BASE_URL + 'item/:record_id', viewitem(record_id))
   ;
 </script>	
 

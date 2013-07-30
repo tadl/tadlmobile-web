@@ -169,13 +169,12 @@ function showfeatured() {
 function viewitem(record_id) {
     cleanhouse();
     var action = {action:"viewitem", record_id:record_id}
-    History.pushState(action, 'Featured Item ' + record_id, 'item/' + record_id);
+    var newstate = 'item/' + record_id;
+    History.pushState(action, 'Featured Item ' + record_id, newstate);
+    state = History.getState();
     $('.load_more').show();
     $('#loadmoretext').empty().append(loadingmoreText).trigger("create");
-    var record_id = record_id;
-    state = History.getState();
     $.getJSON(ILSCATCHER_INSECURE_BASE + "/main/itemdetails.json?utf8=%E2%9C%93&record_id=" + record_id, function(data) {
-        var results = data.message;
         var template = Handlebars.compile($('#result-details-template').html());
         var info = template(data);
         if (state.data.action === "viewitem") {
