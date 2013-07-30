@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <base href="/tadlmobile-web/">
+    <base href="/m/">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <link rel="stylesheet" type="text/css" href="css/holo-base-elements.css" />
     <link rel="stylesheet" type="text/css" href="css/holo-light-elements.css" />
@@ -23,7 +23,7 @@
 		}, false);
 	</script>
 	<script>
-    var BASE_URL = '/tadlmobile-web/';
+    var BASE_URL = '/m/';
   	var router = new staterouter.Router();
 // Configure routes
 router
@@ -415,14 +415,15 @@ router
                             <img src="img/clocktower100.png">
                         {{/if}}
                         </div>
-                        <span class="linkable" style="font-size:14px;">{{message}}</span><br/>Posted on <span class="shortDateFormat">{{created_time}}</span>
                         <span style="font-size:13px; font-style:italic;">{{description}}</span><br/>
+                        <span class="linkable" style="font-size:14px;">{{message}}</span><br/>Posted on <span class="shortDateFormat">{{created_time}}</span>
+                        
                         {{#if caption}}
                             {{#if link}}
                                 <a href="{{link}}" style="font-decoration: none; font-size: 12px;">See More</a>
                             {{/if}}
                         {{/if}}
-                        <span id="{{node.nid}}" style="display:none;">{{node.body}}</span>
+                        
                     </div>
                 {{/compare}} 
             {{/compare}} 
